@@ -1,0 +1,19 @@
+.app {
+  min-height: 100vh;
+  padding: 1em;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  &__logo {
+    width: 200px;
+    height: 55px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../src/image/logo.svg');
+  }
+  &__score {
+
+  }
+}

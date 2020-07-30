@@ -11,17 +11,23 @@ import 'regenerator-runtime/runtime';
 import data from '../constants/birdsData';
 import dataSectionNames from '../constants/dataSectionNames';
 import Navbar from '../components/Navbar/Navbar';
+import Header from '../components/Header/Header';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
-  const [currentData, setCurrentData] = useState(data[setDataSection]);
   const [sectionNames, setSectionNames] = useState(dataSectionNames);
+  const [currentData, setCurrentData] = useState(data[setDataSection]);
+  const [scoreValue, setScoreValue] = useState(0);
+
   return (
-    <Navbar
-      sectionNames={sectionNames}
-      dataSection={dataSection}
-      setDataSection={setDataSection}
-    />
+    <div className="app bg-dark">
+      <Header scoreValue={scoreValue} />
+      <Navbar
+        sectionNames={sectionNames}
+        dataSection={dataSection}
+        setDataSection={setDataSection}
+      />
+    </div>
   );
 };
 
