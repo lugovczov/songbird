@@ -19,6 +19,10 @@ export const App = () => {
   const [currentData, setCurrentData] = useState(data[setDataSection]);
   const [scoreValue, setScoreValue] = useState(0);
 
+  const setNextLevel = () => {
+    dataSection !== data.length ? setDataSection(dataSection + 1) : null;
+  };
+
   return (
     <div className="app bg-dark">
       <Header scoreValue={scoreValue} />
@@ -27,6 +31,12 @@ export const App = () => {
         dataSection={dataSection}
         setDataSection={setDataSection}
       />
+      <CurrentQuestionContainer />
+      <div className="answer-container">
+        <BtnsAnswerContainer />
+        <SelectedAnswerItemContainer />
+      </div>
+      <BtnNextLevel setNextLevel={setNextLevel} />
     </div>
   );
 };
