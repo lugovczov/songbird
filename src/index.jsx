@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
 
@@ -12,12 +12,29 @@ import data from '../constants/birdsData';
 import dataSectionNames from '../constants/dataSectionNames';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
+import randomInteger from '../constants/utilities';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
   const [sectionNames, setSectionNames] = useState(dataSectionNames);
-  const [currentData, setCurrentData] = useState(data[setDataSection]);
+  const [currentData, setCurrentData] = useState();
+  const [currentQuestionItem, setCurrentQuestionItem] = useState();
   const [scoreValue, setScoreValue] = useState(0);
+
+  useEffect(() => {
+    data ? setCurrentData(data[dataSection]) : null;
+  }, [data, dataSection]);
+
+  useEffect(
+    () => {
+      if (currentData) {
+        const randNumber = randomInteger(0, currentData.length - 1);
+        setCurrentQuestionItem(currentData[randNumber]);
+      }
+    },
+    currentData,
+    dataSection
+  );
 
   const setNextLevel = () => {
     dataSection !== data.length ? setDataSection(dataSection + 1) : null;
@@ -31,12 +48,12 @@ export const App = () => {
         dataSection={dataSection}
         setDataSection={setDataSection}
       />
-      <CurrentQuestionContainer />
+      {/* <CurrentQuestionContainer />
       <div className="answer-container">
         <BtnsAnswerContainer />
         <SelectedAnswerItemContainer />
       </div>
-      <BtnNextLevel setNextLevel={setNextLevel} />
+      <BtnNextLevel setNextLevel={setNextLevel} /> */}
     </div>
   );
 };
