@@ -1,0 +1,11 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  &__logo {
+    width: 200px;
+    height: 55px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('./assets/logo.svg');
+  }
+}
