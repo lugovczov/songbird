@@ -13,6 +13,10 @@ import dataSectionNames from '../constants/dataSectionNames';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import randomInteger from '../constants/utilities';
+import { BtnNextLevel } from '../components/BtnNextLevel/BtnNextLevel';
+import { SelectedAnswerItemContainer } from '../components/SelectedAnswerItemContainer/SelectedAnswerItemContainer';
+import { BtnsAnswerContainer } from '../components/BtnsAnswerContainer/BtnsAnswerContainer';
+import { CurrentQuestionContainer } from '../components/CurrentQuestionContainer/CurrentQuestionContainer';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
@@ -40,20 +44,38 @@ export const App = () => {
     dataSection !== data.length ? setDataSection(dataSection + 1) : null;
   };
 
+  const checkTrueAnswer = () => {};
+
+  // TODO: logic for summary score ()
+
   return (
     <div className="app bg-dark">
-      <Header scoreValue={scoreValue} />
-      <Navbar
-        sectionNames={sectionNames}
-        dataSection={dataSection}
-        setDataSection={setDataSection}
-      />
-      {/* <CurrentQuestionContainer />
-      <div className="answer-container">
-        <BtnsAnswerContainer />
-        <SelectedAnswerItemContainer />
+      <div className="app-wrapper">
+        <Header scoreValue={scoreValue} />
+        <Navbar
+          sectionNames={sectionNames}
+          dataSection={dataSection}
+          setDataSection={setDataSection}
+        />
+
+        {currentQuestionItem ? (
+          <>
+            <CurrentQuestionContainer
+              currentQuestionItem={currentQuestionItem}
+            />
+            <div className="answer-container d-flex">
+              <BtnsAnswerContainer
+                currentData={currentData}
+                checkTrueAnswer={checkTrueAnswer}
+              />
+              <SelectedAnswerItemContainer
+                currentQuestionItem={currentQuestionItem}
+              />
+            </div>
+          </>
+        ) : null}
+        <BtnNextLevel setNextLevel={setNextLevel} />
       </div>
-      <BtnNextLevel setNextLevel={setNextLevel} /> */}
     </div>
   );
 };
