@@ -11,7 +11,7 @@ export default function NavbarItem({
   };
   return (
     <label
-      className={`btn btn-primary ${dataSection === index ? 'active' : ''}`}
+      className={`btn btn-success ${dataSection === index ? 'active' : ''}`}
     >
       <input
         type="radio"
