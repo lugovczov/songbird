@@ -24,6 +24,7 @@ export const App = () => {
   const [currentData, setCurrentData] = useState();
   const [currentQuestionItem, setCurrentQuestionItem] = useState();
   const [scoreValue, setScoreValue] = useState(0);
+  const [trueAnswer, setTrueAnswer] = useState(false);
 
   useEffect(() => {
     data ? setCurrentData(data[dataSection]) : null;
@@ -41,7 +42,9 @@ export const App = () => {
   );
 
   const setNextLevel = () => {
-    dataSection !== data.length ? setDataSection(dataSection + 1) : null;
+    dataSection !== data.length
+      ? setDataSection(dataSection + 1) && setTrueAnswer(false)
+      : null;
   };
 
   const checkTrueAnswer = () => {};
@@ -62,6 +65,7 @@ export const App = () => {
           <>
             <CurrentQuestionContainer
               currentQuestionItem={currentQuestionItem}
+              trueAnswer={trueAnswer}
             />
             <div className="answer-container d-flex">
               <BtnsAnswerContainer
