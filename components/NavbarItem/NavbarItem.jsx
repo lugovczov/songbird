@@ -6,20 +6,13 @@ export default function NavbarItem({
   setDataSection,
   index,
 }) {
-  const handleChange = () => {
-    setDataSection(index);
-  };
   return (
     <label
-      className={`btn btn-success ${dataSection === index ? 'active' : ''}`}
+      className={`btn btn-success p-2 text-nowrap ${
+        dataSection === index ? 'active' : 'disabled'
+      }`}
     >
-      <input
-        type="radio"
-        name="options"
-        id={`option${index}`}
-        onClick={handleChange}
-      />{' '}
-      {sectionName}
+      <input type="radio" name="options" id={`option${index}`} /> {sectionName}
     </label>
   );
 }
