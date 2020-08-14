@@ -74,6 +74,7 @@ export const App = () => {
               />
               <SelectedAnswerItemContainer
                 currentQuestionItem={currentQuestionItem}
+                trueAnswer={trueAnswer}
               />
             </div>
           </>
