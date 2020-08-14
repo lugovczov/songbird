@@ -17,14 +17,17 @@ import { BtnNextLevel } from '../components/BtnNextLevel/BtnNextLevel';
 import { SelectedAnswerItemContainer } from '../components/SelectedAnswerItemContainer/SelectedAnswerItemContainer';
 import { BtnsAnswerContainer } from '../components/BtnsAnswerContainer/BtnsAnswerContainer';
 import { CurrentQuestionContainer } from '../components/CurrentQuestionContainer/CurrentQuestionContainer';
+import successAudioSrc from './assets/success.mp3';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
   const [sectionNames, setSectionNames] = useState(dataSectionNames);
   const [currentData, setCurrentData] = useState();
   const [currentQuestionItem, setCurrentQuestionItem] = useState();
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState();
   const [scoreValue, setScoreValue] = useState(0);
   const [trueAnswer, setTrueAnswer] = useState(false);
+  const [selectedAnswerBtnItem, setSelectedAnswerBtnItem] = useState();
 
   useEffect(() => {
     data ? setCurrentData(data[dataSection]) : null;
@@ -35,22 +38,36 @@ export const App = () => {
       if (currentData) {
         const randNumber = randomInteger(0, currentData.length - 1);
         setCurrentQuestionItem(currentData[randNumber]);
+        setCurrentQuestionIndex(randNumber);
       }
     },
     currentData,
     dataSection
   );
+  const successAudio = new Audio();
+  successAudio.src = successAudioSrc;
+
+  useEffect(() => {
+    if (
+      currentQuestionIndex &&
+      currentQuestionIndex === selectedAnswerBtnItem
+    ) {
+      setTrueAnswer(true);
+      successAudio.play();
+    }
+  }, [currentQuestionIndex, selectedAnswerBtnItem]);
 
   const setNextLevel = () => {
-    dataSection !== data.length
-      ? setDataSection(dataSection + 1) && setTrueAnswer(false)
-      : null;
+    if (dataSection !== data.length) {
+      setDataSection(dataSection + 1);
+      setTrueAnswer(false);
+      setSelectedAnswerBtnItem(false);
+    }
   };
 
-  const checkTrueAnswer = () => {};
-
-  // TODO: logic for summary score ()
-
+  // TODO: logic for summary score
+  // TODO: modal after game
+  // TODO: fix audio play
   return (
     <div className="app bg-dark">
       <div className="app-wrapper">
@@ -70,16 +87,15 @@ export const App = () => {
             <div className="answer-container d-flex">
               <BtnsAnswerContainer
                 currentData={currentData}
-                checkTrueAnswer={checkTrueAnswer}
+                setSelectedAnswerBtnItem={setSelectedAnswerBtnItem}
               />
               <SelectedAnswerItemContainer
-                currentQuestionItem={currentQuestionItem}
-                trueAnswer={trueAnswer}
+                currentQuestionItem={currentData[selectedAnswerBtnItem]}
               />
             </div>
           </>
         ) : null}
-        <BtnNextLevel setNextLevel={setNextLevel} />
+        <BtnNextLevel setNextLevel={setNextLevel} trueAnswer={trueAnswer} />
       </div>
     </div>
   );

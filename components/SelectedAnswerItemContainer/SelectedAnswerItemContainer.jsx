@@ -3,12 +3,8 @@ import './SelectedAnswerItemContainer.scss';
 import { ImageItem } from '../ImageItem/ImageItem';
 import H5AudioPlayer from 'react-h5-audio-player';
 
-export const SelectedAnswerItemContainer = ({
-  currentQuestionItem,
-  trueAnswer,
-}) => {
-  // TODO not true answer, necessary click on item state
-  return !trueAnswer ? (
+export const SelectedAnswerItemContainer = ({ currentQuestionItem }) => {
+  return currentQuestionItem ? (
     <div className="selected-answer-container bg-primary ml-2 pt-2 pb-1 pl-2 pr-2 text-center text-white">
       <ImageItem imageSrc={currentQuestionItem.image} />
       <h4 className="text-white mt-3 ml-3 text-left">
@@ -29,7 +25,7 @@ export const SelectedAnswerItemContainer = ({
     </div>
   ) : (
     <div className="selected-answer-container bg-primary ml-2 pt-2 pl-2 ">
-      <p className="m-0">
+      <p className="m-0 text-white">
         <span className="d-block"> Послушайте плеер.</span>
         <span>Выберите птицу из списка</span>
       </p>
