@@ -18,6 +18,7 @@ import { SelectedAnswerItemContainer } from '../components/SelectedAnswerItemCon
 import { BtnsAnswerContainer } from '../components/BtnsAnswerContainer/BtnsAnswerContainer';
 import { CurrentQuestionContainer } from '../components/CurrentQuestionContainer/CurrentQuestionContainer';
 import successAudioSrc from './assets/success.mp3';
+import failAudioSrc from './assets/fail.mp3';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
@@ -43,6 +44,7 @@ export const App = () => {
   }, [currentData, dataSection]);
 
   const successAudio = new Audio(successAudioSrc);
+  const failAudio = new Audio(failAudioSrc);
 
   const checkTrueAnswer = (currentIndex) => {
     setSelectedAnswerBtnItem(currentIndex);
@@ -55,7 +57,7 @@ export const App = () => {
       setScoreValue(scoreValue + scoreCurrent);
     } else {
       scoreCurrent > 0 ? setScoreCurrent(scoreCurrent - 1) : null;
-      // play false
+      failAudio.play();
     }
   };
 
@@ -68,9 +70,14 @@ export const App = () => {
     }
   };
 
-  // TODO: modal after game
-  // TODO: add false click audio (if true answer cancel h5 audio)
+  // TODO: modal after game (если набрано не максимально возможное количество баллов, игроку предлагается пройти викторину ещё раз
+  // если набрано максимально возможное количество баллов, выводится поздравление и уведомление об окончании игры.)
+  // скрывает блок с вопросом, блок с вариантами ответов и блок с описанием птицы
+  // TODO: if true answer cancel h5 audio ()
   // TODO: player volume
+  // TODO: color indication true/false
+  // TODO: update english words + // responsive 320px + // Для удобства проверки правильные ответы выведите в консоль
+
   return (
     <div className="app bg-dark">
       <div className="app-wrapper">
