@@ -12,7 +12,7 @@ import data from '../constants/birdsData';
 import dataSectionNames from '../constants/dataSectionNames';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
-import randomInteger from '../constants/utilities';
+import randomInteger, { MAX_CURRENT_SCORE } from '../constants/utilities';
 import { BtnNextLevel } from '../components/BtnNextLevel/BtnNextLevel';
 import { SelectedAnswerItemContainer } from '../components/SelectedAnswerItemContainer/SelectedAnswerItemContainer';
 import { BtnsAnswerContainer } from '../components/BtnsAnswerContainer/BtnsAnswerContainer';
@@ -28,46 +28,49 @@ export const App = () => {
   const [scoreValue, setScoreValue] = useState(0);
   const [trueAnswer, setTrueAnswer] = useState(false);
   const [selectedAnswerBtnItem, setSelectedAnswerBtnItem] = useState();
+  const [scoreCurrent, setScoreCurrent] = useState(MAX_CURRENT_SCORE);
 
   useEffect(() => {
     data ? setCurrentData(data[dataSection]) : null;
   }, [data, dataSection]);
 
-  useEffect(
-    () => {
-      if (currentData) {
-        const randNumber = randomInteger(0, currentData.length - 1);
-        setCurrentQuestionItem(currentData[randNumber]);
-        setCurrentQuestionIndex(randNumber);
-      }
-    },
-    currentData,
-    dataSection
-  );
-  const successAudio = new Audio();
-  successAudio.src = successAudioSrc;
-
   useEffect(() => {
-    if (
-      currentQuestionIndex &&
-      currentQuestionIndex === selectedAnswerBtnItem
-    ) {
+    if (currentData) {
+      const randNumber = randomInteger(0, currentData.length - 1);
+      setCurrentQuestionItem(currentData[randNumber]);
+      setCurrentQuestionIndex(randNumber);
+    }
+  }, [currentData, dataSection]);
+
+  const successAudio = new Audio(successAudioSrc);
+
+  const checkTrueAnswer = (currentIndex) => {
+    setSelectedAnswerBtnItem(currentIndex);
+    if (trueAnswer) {
+      return;
+    }
+    if (currentQuestionIndex === currentIndex) {
       setTrueAnswer(true);
       successAudio.play();
+      setScoreValue(scoreValue + scoreCurrent);
+    } else {
+      scoreCurrent > 0 ? setScoreCurrent(scoreCurrent - 1) : null;
+      // play false
     }
-  }, [currentQuestionIndex, selectedAnswerBtnItem]);
+  };
 
   const setNextLevel = () => {
     if (dataSection !== data.length) {
       setDataSection(dataSection + 1);
       setTrueAnswer(false);
       setSelectedAnswerBtnItem(false);
+      setScoreCurrent(MAX_CURRENT_SCORE);
     }
   };
 
-  // TODO: logic for summary score
   // TODO: modal after game
-  // TODO: fix audio play
+  // TODO: add false click audio (if true answer cancel h5 audio)
+  // TODO: player volume
   return (
     <div className="app bg-dark">
       <div className="app-wrapper">
@@ -87,7 +90,7 @@ export const App = () => {
             <div className="answer-container d-flex">
               <BtnsAnswerContainer
                 currentData={currentData}
-                setSelectedAnswerBtnItem={setSelectedAnswerBtnItem}
+                checkTrueAnswer={checkTrueAnswer}
               />
               <SelectedAnswerItemContainer
                 currentQuestionItem={currentData[selectedAnswerBtnItem]}

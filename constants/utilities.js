@@ -1,3 +1,5 @@
+export const MAX_CURRENT_SCORE = 5;
+
 const randomInteger = (min, max) => {
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);

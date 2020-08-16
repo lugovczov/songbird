@@ -2,10 +2,7 @@ import React from 'react';
 import './BtnsAnswerContainer.scss';
 import { BtnAnswerItem } from '../BtnAnswerItem/BtnAnswerItem';
 
-export const BtnsAnswerContainer = ({
-  currentData,
-  setSelectedAnswerBtnItem,
-}) => {
+export const BtnsAnswerContainer = ({ currentData, checkTrueAnswer }) => {
   return (
     <div className="mt-3 d-flex flex-column btns-answer-container">
       {currentData.map((el, index) => {
@@ -13,7 +10,7 @@ export const BtnsAnswerContainer = ({
           <BtnAnswerItem
             name={el.name}
             value={index}
-            setSelectedAnswerBtnItem={setSelectedAnswerBtnItem}
+            checkTrueAnswer={checkTrueAnswer}
             key={`btn_answer-${index}`}
           />
         );
