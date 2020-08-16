@@ -74,7 +74,6 @@ export const App = () => {
   // если набрано максимально возможное количество баллов, выводится поздравление и уведомление об окончании игры.)
   // скрывает блок с вопросом, блок с вариантами ответов и блок с описанием птицы
   // TODO: if true answer cancel h5 audio ()
-  // TODO: player volume
   // TODO: color indication true/false
   // TODO: update english words + // responsive 320px + // Для удобства проверки правильные ответы выведите в консоль
 
