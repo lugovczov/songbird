@@ -8,6 +8,7 @@ import { Star } from '../Star/Star';
 export const CurrentQuestionContainer = ({
   currentQuestionItem,
   trueAnswer,
+  playerRef,
 }) => {
   return trueAnswer ? (
     <div className="current-question-container bg-primary mt-3 pt-2 pb-1">
@@ -18,6 +19,7 @@ export const CurrentQuestionContainer = ({
         <H5AudioPlayer
           src={currentQuestionItem.audio}
           autoPlayAfterSrcChange={false}
+          ref={playerRef}
         />
       </div>
     </div>

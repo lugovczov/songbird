@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { hot } from 'react-hot-loader';
 
@@ -43,6 +43,13 @@ export const App = () => {
     }
   }, [currentData, dataSection]);
 
+  const playerRef = useRef();
+  useEffect(() => {
+    if (trueAnswer) {
+      playerRef.current.audio.current.pause();
+    }
+  }, [trueAnswer]);
+
   const successAudio = new Audio(successAudioSrc);
   const failAudio = new Audio(failAudioSrc);
 
@@ -73,7 +80,6 @@ export const App = () => {
   // TODO: modal after game (если набрано не максимально возможное количество баллов, игроку предлагается пройти викторину ещё раз
   // если набрано максимально возможное количество баллов, выводится поздравление и уведомление об окончании игры.)
   // скрывает блок с вопросом, блок с вариантами ответов и блок с описанием птицы
-  // TODO: if true answer cancel h5 audio ()
   // TODO: update english words + // responsive 320px + // Для удобства проверки правильные ответы выведите в консоль
 
   return (
@@ -91,6 +97,7 @@ export const App = () => {
             <CurrentQuestionContainer
               currentQuestionItem={currentQuestionItem}
               trueAnswer={trueAnswer}
+              playerRef={playerRef}
             />
             <div className="answer-container d-flex">
               <BtnsAnswerContainer
