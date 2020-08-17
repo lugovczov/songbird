@@ -19,6 +19,7 @@ import { BtnsAnswerContainer } from '../components/BtnsAnswerContainer/BtnsAnswe
 import { CurrentQuestionContainer } from '../components/CurrentQuestionContainer/CurrentQuestionContainer';
 import successAudioSrc from './assets/success.mp3';
 import failAudioSrc from './assets/fail.mp3';
+import { EndGameWindow } from '../components/EndGameWindow/EndGameWindow';
 
 export const App = () => {
   const [dataSection, setDataSection] = useState(0);
@@ -30,6 +31,7 @@ export const App = () => {
   const [trueAnswer, setTrueAnswer] = useState(false);
   const [selectedAnswerBtnItem, setSelectedAnswerBtnItem] = useState();
   const [scoreCurrent, setScoreCurrent] = useState(MAX_CURRENT_SCORE);
+  const [visibleEndGameWindow, setVisibleEndGameWindow] = useState(false);
 
   useEffect(() => {
     data ? setCurrentData(data[dataSection]) : null;
@@ -69,7 +71,9 @@ export const App = () => {
   };
 
   const setNextLevel = () => {
-    if (dataSection !== data.length) {
+    if (dataSection === data.length - 1) {
+      setVisibleEndGameWindow(true);
+    } else {
       setDataSection(dataSection + 1);
       setTrueAnswer(false);
       setSelectedAnswerBtnItem(false);
@@ -77,9 +81,16 @@ export const App = () => {
     }
   };
 
-  // TODO: modal after game (если набрано не максимально возможное количество баллов, игроку предлагается пройти викторину ещё раз
-  // если набрано максимально возможное количество баллов, выводится поздравление и уведомление об окончании игры.)
-  // скрывает блок с вопросом, блок с вариантами ответов и блок с описанием птицы
+  const restartGame = () => {
+    setCurrentData(data[0]);
+    setDataSection(0);
+    setScoreValue(0);
+    setScoreCurrent(MAX_CURRENT_SCORE);
+    setTrueAnswer(false);
+    setVisibleEndGameWindow(false);
+    setSelectedAnswerBtnItem();
+  };
+
   return (
     <div className="app bg-dark">
       <div className="app-wrapper">
@@ -89,8 +100,9 @@ export const App = () => {
           dataSection={dataSection}
           setDataSection={setDataSection}
         />
-
-        {currentQuestionItem ? (
+        {visibleEndGameWindow ? (
+          <EndGameWindow scoreValue={scoreValue} restartGame={restartGame} />
+        ) : currentQuestionItem ? (
           <>
             <CurrentQuestionContainer
               currentQuestionItem={currentQuestionItem}
@@ -108,9 +120,9 @@ export const App = () => {
                 currentQuestionItem={currentData[selectedAnswerBtnItem]}
               />
             </div>
+            <BtnNextLevel setNextLevel={setNextLevel} trueAnswer={trueAnswer} />
           </>
         ) : null}
-        <BtnNextLevel setNextLevel={setNextLevel} trueAnswer={trueAnswer} />
       </div>
     </div>
   );

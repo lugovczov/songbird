@@ -1,4 +1,5 @@
 export const MAX_CURRENT_SCORE = 5;
+export const MAX_GAME_VALUE = 30;
 export const TRUE_INDICATION = 'TRUE_INDICATION';
 export const FALSE_INDICATION = 'FALSE_INDICATION';
 export const NONE_INDICATION = 'NONE_INDICATION';
