@@ -1,3 +1,16 @@
-.test {
-  color: red;
+@import 'player';
+
+.app-wrapper {
+  margin: 0 auto;
+  max-width: 1020px;
+  min-height: 100vh;
+  padding: 1em;
+}
+
+.answer-container {
+  width: 100%;
+  margin: 0 auto;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }

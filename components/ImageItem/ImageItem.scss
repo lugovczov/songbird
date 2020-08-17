@@ -1,0 +1,13 @@
+.image-item {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 1px;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  -ms-border-radius: 1px;
+  -o-border-radius: 1px;
+  @media only screen and (max-width: 768px) {
+    margin: 15px auto !important;
+  }
+}

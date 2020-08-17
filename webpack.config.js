@@ -73,6 +73,13 @@ const config = env => ({
           'sass-loader',
         ],
       },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader',
+        query: {
+          name: '[name].[hash:8].[ext]'
+        }
+      },
     ],
   },
   resolve: {
