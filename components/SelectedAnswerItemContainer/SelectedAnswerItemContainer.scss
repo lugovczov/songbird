@@ -1,4 +1,12 @@
 .selected-answer-container {
+  min-width: 290px;
+  min-height: 308px;
   margin-top: 20px;
   flex: 1;
+  width: 45%;
+  @media only screen and (max-width: 768px) {
+    margin-left: 0 !important;
+    margin: 15px auto !important;
+    width: 100%;
+  }
 }

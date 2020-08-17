@@ -10,6 +10,7 @@ export const CurrentQuestionContainer = ({
   trueAnswer,
   playerRef,
 }) => {
+  console.log('Правильный ответ:', currentQuestionItem.name);
   return trueAnswer ? (
     <div className="current-question-container bg-primary mt-3 pt-2 pb-1">
       <ImageItem imageSrc={currentQuestionItem.image} />
@@ -27,7 +28,7 @@ export const CurrentQuestionContainer = ({
     <div className="current-question-container bg-primary mt-3 pt-2 pb-1">
       <ImageItem imageSrc={birdImgFalse} />
       <div className="current-question-wrapper">
-        <div className="text-white mt-2 ml-3">
+        <div className="star-wrapper text-white mt-2 ml-3">
           <Star />
           <Star />
           <Star />
